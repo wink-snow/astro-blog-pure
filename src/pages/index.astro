@@ -14,7 +14,7 @@ import config from '@/site-config'
 
 const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
 const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
-const backend = ['Vercel', 'Waline']
+const backend = ['Cloudflare', 'Nginx', 'Waline']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -40,7 +40,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
           <Label
             title='Source code'
             as='a'
-            href='https://github.com/cworld1/astro-theme-pure'
+            href='https://github.com/wink-snow/astro-blog-pure'
             target='_blank'
           >
             <Icon name='github' class='size-5' slot='icon' />
