@@ -1,0 +1,55 @@
+name: Build and Deploy Astro Blog to Raspberry Pi via Cloudflare Tunnel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Install cloudflared
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl lsb-release
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+          sudo dpkg -i cloudflared.deb
+          cloudflared --version # Verify installation
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }} 
+          name: id_rsa_github_actions 
+          known_hosts: 'just-a-placeholder-so-we-can-add-our-own'
+
+      - name: Add Raspberry Pi (via Tunnel) to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KNOWN_HOSTS_PI }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to Raspberry Pi using rsync via Cloudflare Tunnel
+        env:
+          CLOUDFLARED_TUNNEL_HOSTNAME: ${{ secrets.SSH_HOST }} 
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa_github_actions -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes -o ProxyCommand='cloudflared access ssh --hostname ${CLOUDFLARED_TUNNEL_HOSTNAME}'" \
+            ./dist/ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH_ON_PI }}/
