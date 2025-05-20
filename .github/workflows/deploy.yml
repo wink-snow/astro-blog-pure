@@ -1,4 +1,4 @@
-name: Build and Deploy Astro Blog to Raspberry Pi via Cloudflare Tunnel
+name: Build and Deploy Astro Blog to Raspberry Pi via Cloudflare Tunnel (using Bun) 
 
 on:
   push:
@@ -12,17 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Bun 
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18'
-          cache: 'npm'
+          bun-version: "latest" 
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies with Bun 
+        run: bun install
 
-      - name: Build Astro site
-        run: npm run build
+      - name: Verify dependencies (using lockfile) 
+        run: bun install --frozen-lockfile 
+
+      - name: Build Astro site with Bun 
+        run: bun run build
 
       - name: Install cloudflared
         run: |
@@ -35,8 +37,8 @@ jobs:
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }} 
-          name: id_rsa_github_actions 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          name: id_rsa_github_actions
           known_hosts: 'just-a-placeholder-so-we-can-add-our-own'
 
       - name: Add Raspberry Pi (via Tunnel) to known_hosts
@@ -47,7 +49,7 @@ jobs:
 
       - name: Deploy to Raspberry Pi using rsync via Cloudflare Tunnel
         env:
-          CLOUDFLARED_TUNNEL_HOSTNAME: ${{ secrets.SSH_HOST }} 
+          CLOUDFLARED_TUNNEL_HOSTNAME: ${{ secrets.SSH_HOST }}
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/id_rsa_github_actions -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes -o ProxyCommand='cloudflared access ssh --hostname ${CLOUDFLARED_TUNNEL_HOSTNAME}'" \
