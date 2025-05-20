@@ -3,7 +3,7 @@ name: Build and Deploy Astro Blog to Raspberry Pi via Cloudflare Tunnel (using B
 on:
   push:
     branches:
-      - fix-GA
+      - main
 
 jobs:
   build-and-deploy:
