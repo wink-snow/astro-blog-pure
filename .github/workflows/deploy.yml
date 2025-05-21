@@ -56,12 +56,20 @@ jobs:
             ./dist/ \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH_ON_PI }}/
 
+      # - name: Restart Astro SSR service on Raspberry Pi
+      #   env:
+      #     REMOTE_USER: ${{ secrets.SSH_USER }}
+      #     REMOTE_HOST: ${{ secrets.SSH_HOST }}
+      #     REMOTE_PORT: ${{ secrets.SSH_PORT || 22 }}
+      #   run: |
+      #     ssh -p ${REMOTE_PORT} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+      #       ${REMOTE_USER}@${REMOTE_HOST} \
+      #       "sudo systemctl restart astro-ssr.service"
+
       - name: Restart Astro SSR service on Raspberry Pi
         env:
-          REMOTE_USER: ${{ secrets.SSH_USER }}
-          REMOTE_HOST: ${{ secrets.SSH_HOST }}
-          REMOTE_PORT: ${{ secrets.SSH_PORT || 22 }}
+          CLOUDFLARED_TUNNEL_HOSTNAME: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -p ${REMOTE_PORT} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
-            ${REMOTE_USER}@${REMOTE_HOST} \
+          ssh -i ~/.ssh/id_rsa_github_actions -o UserKnownHostsFile=~/.ssh/known_hosts -o StrictHostKeyChecking=yes -o ProxyCommand='cloudflared access ssh --hostname ${CLOUDFLARED_TUNNEL_HOSTNAME}' \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "sudo systemctl restart astro-ssr.service"
