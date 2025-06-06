@@ -16,6 +16,27 @@ test
 test
 ```
 
+`test`
+<code>test</code>
+
+## Autolink literals
+ 
+www.example.com, https://example.com, and contact@example.com.
+ 
+## Strikethrough
+ 
+~one~ or ~~two~~ tildes.
+ 
+## Table
+ 
+| a | b  |  c |  d  |
+| - | :- | -: | :-: |
+ 
+## Tasklist
+ 
+* [ ] to do
+* [x] done
+
 <!-- Conbine:
 
 ![CWorld](https://cravatar.cn/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200)
