@@ -45,6 +45,6 @@ sudo userdel -r newuser
 | :--- | :--- | 
 | less /ect/group | 分页查看所有组 |
 | getent group | 查看所有组 |
-| getent group <groupname> | 查看组内用户 |
-| groups <username> | 查看用户所属的组 |
-| id <username> | 查看用户所属的组及 UID/GID |
+| getent group \<groupname\> | 查看组内用户 |
+| groups \<username\> | 查看用户所属的组 |
+| id \<username\> | 查看用户所属的组及 UID/GID |
