@@ -24,7 +24,7 @@
     "@astrojs/vercel": "^8.0.3",
     "@playform/compress": "^0.1.7",
     "@unocss/reset": "^65.4.3",
-    "@waline/client": "^3.5.1",
+    "@waline/client": "^3.5.7",
     "astro": "^5.1.9",
     "astro-pure": "1.2.5",
     "katex": "^0.16.21",
