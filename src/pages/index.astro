@@ -12,9 +12,9 @@ import SkillLayout from '@/components/home/SkillLayout.astro'
 import avatar from '@/assets/avatar.png'
 import config from '@/site-config'
 
-const languages = ['Python', 'C#', 'C', 'C++', 'Kotlin', 'Shell', 'Lua']
+const languages = ['Python', 'java', 'C#', 'C', 'C++', 'Kotlin', 'Shell', 'Lua']
 const frontend = ['Html', 'JavaScript', 'CSS', 'TypeScript', 'ASP.Net Core', 'Blazor', 'Vue', 'Vite', 'Astro']
-const backend = ['Cloudflare', 'Nginx', 'FastAPI', 'MySQL', 'SQLite']
+const backend = ['Cloudflare', 'Nginx', 'Spring Boot', 'Express', 'FastAPI', 'PostgreSQL', 'MySQL', 'SQLite']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -141,28 +141,10 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       <Section title='Website List'>
         <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
+            href='https://wiki.snowink.store'
+            heading='Snowink Wiki'
+            subheading='A wiki site for my projects.'
             imagePath='/src/assets/projects/alex-tyson-2BAXJ7ha74s-unsplash.jpg'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
-            imagePath='/src/assets/projects/angelica-teran-Bk9hpaXHK4o-unsplash.jpg'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
-            imagePath='/src/assets/projects/kseniia-zapiatkina-yATU3rg8tNI-unsplash.jpg'
-          />
-          <ProjectCard
-            href='/projects'
-            heading='More projects'
-            subheading='Check out more projects'
-            imagePath='/src/assets/projects/wen-qiao-g_w8I64FiO0-unsplash.jpg'
           />
         </div>
       </Section>
