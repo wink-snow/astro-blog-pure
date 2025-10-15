@@ -14,7 +14,7 @@ import config from '@/site-config'
 
 const languages = ['Python', 'java', 'C#', 'C', 'C++', 'Kotlin', 'Shell', 'Lua']
 const frontend = ['Html', 'JavaScript', 'CSS', 'TypeScript', 'ASP.Net Core', 'Blazor', 'Vue', 'Vite', 'Astro']
-const backend = ['Cloudflare', 'Nginx', 'Spring Boot', 'Express', 'FastAPI', 'PostgreSQL', 'MySQL', 'SQLite']
+const backend = ['Cloudflare', 'Nginx', 'Spring Boot', 'Express', 'FastAPI', 'PostgreSQL', 'MySQL', 'SQLite', 'MyBatis', 'Caffeine', 'Redis']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -143,7 +143,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
           <ProjectCard
             href='https://wiki.snowink.store'
             heading='Snowink Wiki'
-            subheading='A wiki site for my projects.'
+            subheading='A wiki site of games.'
             imagePath='/src/assets/projects/alex-tyson-2BAXJ7ha74s-unsplash.jpg'
           />
         </div>
